@@ -1,6 +1,10 @@
 package com.github.wezmoreira.avaliacao.dto.request;
 
 import com.github.wezmoreira.avaliacao.entities.Item;
+import com.github.wezmoreira.avaliacao.entities.PedidoPagamento;
+import com.github.wezmoreira.avaliacao.enums.EnumStatus;
+import com.github.wezmoreira.avaliacao.enums.EnumStatusPagamento;
+import com.github.wezmoreira.avaliacao.enums.EnumTipoPagamento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +28,13 @@ public class RequestPedidoDTO {
     private String cpf;
     @NotNull @Positive
     private Double total;
+
+    private EnumStatus status;
+    private EnumStatusPagamento status_pagamento;
+    private EnumTipoPagamento tipo_pagamento;
+
     private List<@Valid Item> itens;
+
+    private List<@Valid PedidoPagamento> pedidoPagamento;
 
 }
