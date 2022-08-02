@@ -11,8 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -43,11 +47,11 @@ public class ControllerPedido {
 
     @PostMapping
     public ResponseEntity<ResponsePedidoDTO> post
-            (@RequestBody @Valid RequestPedidoDTO requestPedidoDTO) {
-        ResponsePedidoDTO responsePedidoDTO = servicePedido
-                .post(requestPedidoDTO);
-        serviceRabbit.rabbitMensagem(responsePedidoDTO);
-        return ResponseEntity.ok(responsePedidoDTO);
+            (@RequestBody @Valid RequestPedidoDTO requestPedidoDTO, UriComponentsBuilder uriComponentsBuilder) {
+        ResponsePedidoDTO responsePedidoDTO = servicePedido.post(requestPedidoDTO);
+        URI uri = uriComponentsBuilder.path("/api/pedidos/{id}").buildAndExpand(responsePedidoDTO.getId()).toUri();
+        serviceRabbit.rabbitMensagem(responsePedidoDTO); //comunicação com o consumer
+        return ResponseEntity.created(uri).body(responsePedidoDTO);
     }
 
     @PatchMapping("/{id}")
