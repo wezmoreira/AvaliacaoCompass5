@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "pedido_itens_ofertas")
 public class Oferta {
 
     @Id

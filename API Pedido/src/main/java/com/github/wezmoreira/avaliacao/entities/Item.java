@@ -18,6 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "pedido_itens")
 public class Item {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +37,14 @@ public class Item {
     private String descricao;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "RL_itens_ofertas",
+            joinColumns = @JoinColumn(
+                    name = "item_id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "oferta_id"
+            )
+    )
     private List<Oferta> ofertas;
-
-
 }
