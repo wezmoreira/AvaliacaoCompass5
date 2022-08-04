@@ -51,6 +51,8 @@ public class ControllerPedido {
         ResponsePedidoDTO responsePedidoDTO = servicePedido.post(requestPedidoDTO);
         URI uri = uriComponentsBuilder.path("/api/pedidos/{id}").buildAndExpand(responsePedidoDTO.getId()).toUri();
         serviceRabbit.rabbitMensagem(responsePedidoDTO); //comunicação com o consumer
+        System.out.println(responsePedidoDTO.getPedidoPagamento());
+        System.out.println(responsePedidoDTO.getItens());
         return ResponseEntity.created(uri).body(responsePedidoDTO);
     }
 

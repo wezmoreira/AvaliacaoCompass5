@@ -32,7 +32,8 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private EnumTipoPagamento tipo_pagamento;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    //Alterei de @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "RL_pedidos_itens",
             joinColumns = @JoinColumn(
@@ -44,7 +45,8 @@ public class Pedido {
     )
     private List<Item> itens;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pagamento_id")
-    private List<@Valid PedidoPagamento> pedidoPagamento;
+    private Pagamento pedidoPagamento;
+    //private List<@Valid Pagamento> pedidoPagamento; //alterei
 }

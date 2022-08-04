@@ -1,7 +1,7 @@
 package com.github.wezmoreira.avaliacao.dto.response;
 
 import com.github.wezmoreira.avaliacao.entities.Item;
-import com.github.wezmoreira.avaliacao.entities.PedidoPagamento;
+import com.github.wezmoreira.avaliacao.entities.Pagamento;
 import com.github.wezmoreira.avaliacao.enums.EnumStatus;
 import com.github.wezmoreira.avaliacao.enums.EnumStatusPagamento;
 import com.github.wezmoreira.avaliacao.enums.EnumTipoPagamento;
@@ -22,6 +22,6 @@ public class ResponsePedidoDTO {
     private EnumTipoPagamento tipo_pagamento;
 
     private List<Item> itens;
-
-    private List<@Valid PedidoPagamento> pedidoPagamento;
+    private Pagamento pedidoPagamento;
+    //private List<@Valid Pagamento> pedidoPagamento;
 }

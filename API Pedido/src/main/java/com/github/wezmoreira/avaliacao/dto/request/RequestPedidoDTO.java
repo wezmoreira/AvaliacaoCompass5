@@ -1,7 +1,7 @@
 package com.github.wezmoreira.avaliacao.dto.request;
 
 import com.github.wezmoreira.avaliacao.entities.Item;
-import com.github.wezmoreira.avaliacao.entities.PedidoPagamento;
+import com.github.wezmoreira.avaliacao.entities.Pagamento;
 import com.github.wezmoreira.avaliacao.enums.EnumStatus;
 import com.github.wezmoreira.avaliacao.enums.EnumStatusPagamento;
 import com.github.wezmoreira.avaliacao.enums.EnumTipoPagamento;
@@ -28,13 +28,16 @@ public class RequestPedidoDTO {
     private String cpf;
     @NotNull @Positive
     private Double total;
-
+    @NotNull
     private EnumStatus status;
+    @NotNull
     private EnumStatusPagamento status_pagamento;
+    @NotNull
     private EnumTipoPagamento tipo_pagamento;
-
+    @NotNull
     private List<@Valid Item> itens;
-
-    private List<@Valid PedidoPagamento> pedidoPagamento;
+    @NotNull
+    private Pagamento pedidoPagamento;
+    //private List<@Valid Pagamento> pedidoPagamento;
 
 }

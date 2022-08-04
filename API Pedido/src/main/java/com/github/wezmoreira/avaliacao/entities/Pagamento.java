@@ -1,23 +1,23 @@
-package com.github.wezmoreira.avaliacao.dto.request;
+package com.github.wezmoreira.avaliacao.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.wezmoreira.avaliacao.enums.EnumMarca;
 import com.github.wezmoreira.avaliacao.enums.EnumMoeda;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
+@Entity
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class RequestPedidoPagamento {
-
+@Table(name = "pedido_pagamentos")
+public class Pagamento {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String numero_cartao;
     private String nome_cartao;
     private String codigo_seguranca;
@@ -28,5 +28,4 @@ public class RequestPedidoPagamento {
     @Enumerated(EnumType.STRING)
     private EnumMoeda moeda;
     private Double valor;
-
 }
