@@ -9,18 +9,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@Entity
-public class Pagamento {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@AllArgsConstructor
+public class PagamentoRecebeDado {
+
     private Long id;
-    private Long pedidoId;
-    @CreationTimestamp
-    private LocalDateTime data;
-    private String cpf;
-    private double total;
+    private String numero_cartao;
+    private String nome_cartao;
+    private String codigo_seguranca;
+    private String marca;
+    private String mes_expiracao;
+    private String ano_expiracao;
+    private String moeda;
+    private Double valor;
 }
