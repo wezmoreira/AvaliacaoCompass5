@@ -39,7 +39,7 @@ public class ConsumerPagamento {
         System.out.println("O recebimento do produto é : " + pagamentoDto);
 
 
-        servicePagamentoTEST.requestBanco(pagamentoDto);
+        servicePagamentoTEST.pagamentoBancoTEST(pagamentoDto);
     }
 
 

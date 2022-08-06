@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 @Slf4j
 @Service
 public class ServicePagamentoTEST {
@@ -43,22 +48,9 @@ public class ServicePagamentoTEST {
         return retorno;
     }
 
-
-    public ResponsePagamentoBancoDTO requestBanco(RecebeDadosDTO recebeDadosDTO){
-        String autenticador = autenticacao().getAccess_token();
-        return web.post()
-                .uri(bancoAprovacao)
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(autenticador))
-                .bodyValue(pagamentoBancoTEST(recebeDadosDTO))
-                .retrieve()
-                .bodyToMono(ResponsePagamentoBancoDTO.class)
-                .block();
-    }
-
-
     //alterar titulo
-    public RequestPagamentoBancoDTO pagamentoBancoTEST(RecebeDadosDTO mensagemPedidoDTO){  //mudei de response pra request
-        //String autenticador = autenticacao().getAccess_token();
+    public ResponsePagamentoBancoDTO pagamentoBancoTEST(RecebeDadosDTO mensagemPedidoDTO){  //mudei de response pra request
+        String autenticador = autenticacao().getAccess_token();
 
         System.out.println("O recebimento do produto no SERVICE é : " + mensagemPedidoDTO);
 
@@ -88,9 +80,16 @@ public class ServicePagamentoTEST {
                         .build()).build();
 
 
-        log.info("\n O valor aqui no método PAGAMENTO é: " + requestPagamentoBancoDTO);
+        return web.post()
+                .uri(bancoAprovacao)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(autenticador))
+                .bodyValue(requestPagamentoBancoDTO)
+                .retrieve()
+                .bodyToMono(ResponsePagamentoBancoDTO.class)
+                .block();
 
-        return requestPagamentoBancoDTO;
+        //log.info("\n O valor aqui no método PAGAMENTO é: " + requestPagamentoBancoDTO);
+
 
     }
 }
