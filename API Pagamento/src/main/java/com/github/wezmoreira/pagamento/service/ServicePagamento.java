@@ -1,6 +1,6 @@
 package com.github.wezmoreira.pagamento.service;
 
-import com.github.wezmoreira.pagamento.consumer.RecebeDadosDTO;
+import com.github.wezmoreira.pagamento.consumer.model.RecebeDadosDTO;
 import com.github.wezmoreira.pagamento.dto.pagamento.request.RequestCartaoDTO;
 import com.github.wezmoreira.pagamento.dto.pagamento.request.RequestClienteDTO;
 import com.github.wezmoreira.pagamento.dto.pagamento.request.RequestPagamentoBancoDTO;
@@ -20,17 +20,13 @@ public class ServicePagamento {
     @Autowired
     WebClient web;
 
-    //@Autowired
-    //private WebClient webClient;
-
-
     private final String bancoAprovacao = "https://pb-getway-payment.herokuapp.com/v1/payments/credit-card";
     private final String autenticar = "https://pb-getway-payment.herokuapp.com/v1/auth";
 
     private final String numeroCartao= "dfe05208b105578c070f806c80abd3af09e246827d29b866cf4ce16c205849977c9496cbf0d0234f42\n" +
             "339937f327747075f68763537b90b31389e01231d4d13c\"";
 
-    //Toda vez que chamar esse método vai retornar o token
+
     public ResponseToken autenticacao() {
         RequestToken wesleyToken = RequestToken.builder().client_id("client_id_wesley")
                 .api_key("95801864-8009-41f4-a9d3-a602fbca4466").build();
@@ -47,7 +43,7 @@ public class ServicePagamento {
     public ResponsePagamentoBancoDTO pagamentoBancoTEST(RecebeDadosDTO mensagemPedidoDTO){  //mudei de response pra request
         String autenticador = autenticacao().getAccess_token();
 
-        System.out.println("O recebimento do produto no SERVICE é : " + mensagemPedidoDTO);
+        log.info("O recebimento do produto no SERVICE é : " + mensagemPedidoDTO);
 
         RequestPagamentoBancoDTO requestPagamentoBancoDTO = RequestPagamentoBancoDTO.builder()
                 .seller_id("b2c3119f-e7f9-46ce-9531-9213e5dc5cb1")

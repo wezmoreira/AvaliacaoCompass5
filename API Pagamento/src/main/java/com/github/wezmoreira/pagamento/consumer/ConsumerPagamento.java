@@ -1,15 +1,18 @@
 package com.github.wezmoreira.pagamento.consumer;
 
 
+import com.github.wezmoreira.pagamento.consumer.model.RecebeDadosDTO;
 import com.github.wezmoreira.pagamento.dto.rabbitMQ.RetornaStatus;
 import com.github.wezmoreira.pagamento.entities.Pagamento;
 import com.github.wezmoreira.pagamento.repository.RepositoryPagamento;
 import com.github.wezmoreira.pagamento.service.ServicePagamento;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class ConsumerPagamento {
 
@@ -32,23 +35,13 @@ public class ConsumerPagamento {
 
     @RabbitListener(queues = QUEUE)
     public void consumidor(RecebeDadosDTO pagamentoDTO) {
-        System.out.println("Id recebido: " + pagamentoDTO.getId());
-        System.out.println("Total recebido: " + pagamentoDTO.getTotal());
-        System.out.println("*******************************");
         pagamento(pagamentoDTO);
     }
 
     public void pagamento(RecebeDadosDTO pagamentoDto){
-        //Pagamento pagamento = new Pagamento();
-
-        System.out.println("O recebimento do produto é : " + pagamentoDto);
+        log.info("O recebimento do produto é : " + pagamentoDto);
 
         var retorno = servicePagamentoTEST.pagamentoBancoTEST(pagamentoDto);
-
-        //pagamento.setPedidoId(pagamentoDto.getId());
-        //pagamento.setCpf(pagamentoDto.getCpf());
-        //pagamento.setTotal(pagamentoDto.getTotal());
-        //pagamento.setStatus(retorno.getStatus());
 
         Pagamento pagamento = Pagamento.builder()
                 .pedidoId(pagamentoDto.getId())

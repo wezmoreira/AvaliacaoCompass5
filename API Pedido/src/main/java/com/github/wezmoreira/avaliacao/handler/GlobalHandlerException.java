@@ -21,9 +21,10 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
     private static final String PEDIDO_NAO_ENCONTRADO = "Pedido não encontrado";
     private static final String ITEM_NAO_ENCONTRADO = "Item não encontrado.";
     private static final String CAMPO_NULL = "Campo não pode ser Nulo!";
-
     private static final String DATA_INVALIDA = "Data inválida, verifique a (data_criacao) e (data_validade), " +
             "os valores precisam ser exatos as regras pré-estabelecidas!";
+    private static final String REMOCAO_INVALIDA = "Não pode remover um pedido que foi rejeitado ou aprovado!";
+
 
 
     @ExceptionHandler(value = ItemNaoEncontradoException.class)
@@ -44,6 +45,11 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = DataInvalidaException.class)
     protected ResponseEntity<MensagemErro> handlerIdeologiaNaoEncontrado(DataInvalidaException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErro(DATA_INVALIDA));
+    }
+
+    @ExceptionHandler(value = RemocaoInvalidaException.class)
+    protected ResponseEntity<MensagemErro> handlerRemocaoInvalida(RemocaoInvalidaException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErro(REMOCAO_INVALIDA));
     }
 
     protected ResponseEntity<Object> handleMethodArgumentNotValid

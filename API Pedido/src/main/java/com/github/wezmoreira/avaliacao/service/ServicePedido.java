@@ -8,6 +8,7 @@ import com.github.wezmoreira.avaliacao.entities.Pedido;
 import com.github.wezmoreira.avaliacao.enums.EnumStatus;
 import com.github.wezmoreira.avaliacao.enums.EnumStatusPagamento;
 import com.github.wezmoreira.avaliacao.exceptions.PedidoNaoEncontradoException;
+import com.github.wezmoreira.avaliacao.exceptions.RemocaoInvalidaException;
 import com.github.wezmoreira.avaliacao.repositories.RepositoryPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,10 @@ public class ServicePedido {
     public void delete(Long id) {
         Pedido pedido = repositoryPedido.findById(id)
                 .orElseThrow(PedidoNaoEncontradoException::new);
+        if(pedido.getStatus_pagamento().equals(EnumStatusPagamento.APPROVED) ||
+                pedido.getStatus_pagamento().equals(EnumStatusPagamento.REPROVED)){
+            throw new RemocaoInvalidaException();
+        }
         repositoryPedido.delete(pedido);
     }
 

@@ -34,8 +34,4 @@ public class ServiceRabbit {
         var id = pagamentoDTO.getPedido_id();
         servicePedido.atualizaStatus(id, pagamentoDTO);
     }
-
-
-
-
 }

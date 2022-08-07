@@ -1,6 +1,5 @@
-package com.github.wezmoreira.pagamento.consumer;
+package com.github.wezmoreira.pagamento.consumer.model;
 
-import com.github.wezmoreira.pagamento.entities.Pagamento;
 import com.github.wezmoreira.pagamento.entities.PagamentoRecebeDado;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
