@@ -21,10 +21,5 @@ public class MensagemPedidoDTO {
     private String tipo_pagamento;  //alterei 18:59
     private ResponseCartaoDTO cartao;
     private Double total;
-
-
-    //private LocalDateTime data;
-    //private String status;
     private Pagamento pagamento;
-    //private ResponsePagamentoCartaoDTO pagamento_cartao;
 }

@@ -21,6 +21,7 @@ public class Pagamento {
     private Long pedidoId;
     @CreationTimestamp
     private LocalDateTime data;
+    private String status;
     private String cpf;
     private double total;
 }
