@@ -1,10 +1,12 @@
 package com.github.wezmoreira.avaliacao.service;
 
 import com.github.wezmoreira.avaliacao.AplicationConfigTest;
+import com.github.wezmoreira.avaliacao.dto.rabbit.RecebeDadoPagamentoDTO;
 import com.github.wezmoreira.avaliacao.dto.request.RequestPedidoDTO;
 import com.github.wezmoreira.avaliacao.dto.request.atualizacao.RequestAtualizaPedidoDTO;
 import com.github.wezmoreira.avaliacao.dto.response.ResponsePedidoDTO;
 import com.github.wezmoreira.avaliacao.entities.Pedido;
+import com.github.wezmoreira.avaliacao.enums.EnumStatusPagamento;
 import com.github.wezmoreira.avaliacao.repositories.RepositoryPedido;
 import com.github.wezmoreira.avaliacao.service.ServicePedido;
 import com.github.wezmoreira.avaliacao.service.ServiceValidacao;

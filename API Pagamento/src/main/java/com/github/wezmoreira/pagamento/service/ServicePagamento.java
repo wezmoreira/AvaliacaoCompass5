@@ -7,6 +7,7 @@ import com.github.wezmoreira.pagamento.dto.pagamento.request.RequestPagamentoBan
 import com.github.wezmoreira.pagamento.dto.pagamento.request.RequestToken;
 import com.github.wezmoreira.pagamento.dto.pagamento.response.ResponsePagamentoBancoDTO;
 import com.github.wezmoreira.pagamento.dto.pagamento.response.ResponseToken;
+import com.github.wezmoreira.pagamento.util.Criptografa;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,11 @@ public class ServicePagamento {
     @Autowired
     WebClient web;
 
+    @Autowired
+    Criptografa criptografa;
+
     private final String bancoAprovacao = "https://pb-getway-payment.herokuapp.com/v1/payments/credit-card";
     private final String autenticar = "https://pb-getway-payment.herokuapp.com/v1/auth";
-
-    private final String numeroCartao= "dfe05208b105578c070f806c80abd3af09e246827d29b866cf4ce16c205849977c9496cbf0d0234f42\n" +
-            "339937f327747075f68763537b90b31389e01231d4d13c\"";
 
 
     public ResponseToken autenticacao() {
@@ -39,11 +40,8 @@ public class ServicePagamento {
         return retorno;
     }
 
-    //alterar titulo
-    public ResponsePagamentoBancoDTO pagamentoBancoTEST(RecebeDadosDTO mensagemPedidoDTO){  //mudei de response pra request
+    public ResponsePagamentoBancoDTO pagamentoBanco(RecebeDadosDTO mensagemPedidoDTO){  //mudei de response pra request
         String autenticador = autenticacao().getAccess_token();
-
-        log.info("O recebimento do produto no SERVICE é : " + mensagemPedidoDTO);
 
         RequestPagamentoBancoDTO requestPagamentoBancoDTO = RequestPagamentoBancoDTO.builder()
                 .seller_id("b2c3119f-e7f9-46ce-9531-9213e5dc5cb1")
@@ -52,17 +50,17 @@ public class ServicePagamento {
                         .document_number(mensagemPedidoDTO.getCpf()).build())
                 .payment_type("CREDIT_CARD")
                 .currency("BRL")
-                .transaction_amount(mensagemPedidoDTO.getTotal())  //faltou o doublevalue
+                .transaction_amount(mensagemPedidoDTO.getTotal())
                 .card(RequestCartaoDTO.builder()
-                        //.number_token(mensagemPedidoDTO.getPagamento().getNumero_cartao())
-                        //.number_token(criptografar(mensagemPedidoDTO.getPagamento().getNumero_cartao()))
-                        .number_token("dfe05208b105578c070f806c80abd3af09e246827d29b866cf4ce16c205849977c9496cbf0d0234f42339937f327747075f68763537b90b31389e01231d4d13c")
+                        .number_token(criptografa.encriptografar(mensagemPedidoDTO.getPagamento().getNumero_cartao()))
                         .cardholder_name(mensagemPedidoDTO.getPagamento().getNome_cartao())
                         .security_code(mensagemPedidoDTO.getPagamento().getCodigo_seguranca())
                         .brand(mensagemPedidoDTO.getPagamento().getMarca())
                         .expiration_month(mensagemPedidoDTO.getPagamento().getMes_expiracao())
                         .expiration_year(mensagemPedidoDTO.getPagamento().getAno_expiracao())
                         .build()).build();
+
+        log.info("O valor do TOKEN DO CARTAO é do banco é: " + requestPagamentoBancoDTO.getCard().getNumber_token());
 
 
         var retorno = web.post()
@@ -73,7 +71,7 @@ public class ServicePagamento {
                 .bodyToMono(ResponsePagamentoBancoDTO.class)
                 .block();
 
-        log.info("O valor do RETORNO do banco do REGi é : " + retorno);
-        return retorno;
+            log.info("O valor do RETORNO do banco é: " + retorno);
+            return retorno;
     }
 }

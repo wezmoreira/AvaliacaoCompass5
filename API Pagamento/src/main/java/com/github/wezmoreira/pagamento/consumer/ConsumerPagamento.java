@@ -41,7 +41,7 @@ public class ConsumerPagamento {
     public void pagamento(RecebeDadosDTO pagamentoDto){
         log.info("O recebimento do produto é : " + pagamentoDto);
 
-        var retorno = servicePagamentoTEST.pagamentoBancoTEST(pagamentoDto);
+        var retorno = servicePagamentoTEST.pagamentoBanco(pagamentoDto);
 
         Pagamento pagamento = Pagamento.builder()
                 .pedidoId(pagamentoDto.getId())
