@@ -1,7 +1,6 @@
 package com.github.wezmoreira.avaliacao.enums;
 
-public enum EnumStatus {
-    EM_ANDAMENTO,
-    FINALIZADO,
-    CANCELADO;
+public enum EnumStatus{
+    PROCESSING,
+    FINISHED;
 }

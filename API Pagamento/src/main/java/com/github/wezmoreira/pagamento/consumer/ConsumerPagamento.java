@@ -39,16 +39,24 @@ public class ConsumerPagamento {
     }
 
     public void pagamento(RecebeDadosDTO pagamentoDto){
-        Pagamento pagamento = new Pagamento();
+        //Pagamento pagamento = new Pagamento();
 
         System.out.println("O recebimento do produto é : " + pagamentoDto);
 
         var retorno = servicePagamentoTEST.pagamentoBancoTEST(pagamentoDto);
 
-        pagamento.setPedidoId(pagamentoDto.getId());
-        pagamento.setCpf(pagamentoDto.getCpf());
-        pagamento.setTotal(pagamentoDto.getTotal());
-        pagamento.setStatus(retorno.getStatus());
+        //pagamento.setPedidoId(pagamentoDto.getId());
+        //pagamento.setCpf(pagamentoDto.getCpf());
+        //pagamento.setTotal(pagamentoDto.getTotal());
+        //pagamento.setStatus(retorno.getStatus());
+
+        Pagamento pagamento = Pagamento.builder()
+                .pedidoId(pagamentoDto.getId())
+                .cpf(pagamentoDto.getCpf())
+                .total(pagamentoDto.getTotal())
+                .status(retorno.getStatus())
+                .build();
+
 
         RetornaStatus retornaStatus = RetornaStatus.builder()
                 .pedido_id(pagamento.getPedidoId())
@@ -58,27 +66,9 @@ public class ConsumerPagamento {
         enviaDadosQueue(retornaStatus);
 
         repositoryPagamento.save(pagamento);
-
     }
-
 
     public void enviaDadosQueue(RetornaStatus retornaStatus){
         rabbitTemplate.convertAndSend(queueRetorna, retornaStatus);
     }
-
-
-
-    /*
-    public void pagamento(PagamentoDTO pagamentoDto){
-        Pagamento pagamento = new Pagamento();
-        pagamento.setPedidoId(pagamentoDto.getId());
-        pagamento.setTotal(pagamentoDto.getTotal());
-        MensagemPedidoDTO mensagemPedidoDTO = new MensagemPedidoDTO();
-
-        var teste = servicePagamento.pagamentoBanco(mensagemPedidoDTO);
-        System.out.println(teste);
-        repositoryPagamento.save(pagamento);
-    }
-
-     */
 }

@@ -1,9 +1,12 @@
 package com.github.wezmoreira.avaliacao.service;
 
+import com.github.wezmoreira.avaliacao.dto.rabbit.RecebeDadoPagamentoDTO;
 import com.github.wezmoreira.avaliacao.dto.request.RequestPedidoDTO;
 import com.github.wezmoreira.avaliacao.dto.request.atualizacao.RequestAtualizaPedidoDTO;
 import com.github.wezmoreira.avaliacao.dto.response.ResponsePedidoDTO;
 import com.github.wezmoreira.avaliacao.entities.Pedido;
+import com.github.wezmoreira.avaliacao.enums.EnumStatus;
+import com.github.wezmoreira.avaliacao.enums.EnumStatusPagamento;
 import com.github.wezmoreira.avaliacao.exceptions.PedidoNaoEncontradoException;
 import com.github.wezmoreira.avaliacao.repositories.RepositoryPedido;
 import org.modelmapper.ModelMapper;
@@ -66,5 +69,19 @@ public class ServicePedido {
         Pedido pedido = repositoryPedido.findById(id)
                 .orElseThrow(PedidoNaoEncontradoException::new);
         repositoryPedido.delete(pedido);
+    }
+
+    public void atualizaStatus(Long id, RecebeDadoPagamentoDTO recebeDadoPagamentoDTO) {
+        Pedido pedido = repositoryPedido.findById(id)
+                .orElseThrow(PedidoNaoEncontradoException::new);
+        if(recebeDadoPagamentoDTO.getStatus_pagamento().equals(EnumStatusPagamento.APPROVED.name())) {
+            pedido.setStatus_pagamento(EnumStatusPagamento.APPROVED);
+            pedido.setStatus(EnumStatus.FINISHED);
+        }
+        if(recebeDadoPagamentoDTO.getStatus_pagamento().equals(EnumStatusPagamento.REPROVED.name())) {
+            pedido.setStatus_pagamento(EnumStatusPagamento.REPROVED);
+            pedido.setStatus(EnumStatus.FINISHED);
+        }
+        repositoryPedido.save(pedido);
     }
 }
