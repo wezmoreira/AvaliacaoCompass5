@@ -1,33 +1,48 @@
-#Avaliação Sprint 5
+# Avaliação Sprint 5 e Sprint 6
 
-##Endpoints
+## Endpoints
 
 ### Post
 - http://localhost:8080/api/pedido
 
-#### Body do Post (deve ser um Cpf válido!)
+#### Body do Post (deve ser um Cpf válido!) 
+#### E "mes_expiracao" no campo  "pedidoPagamento" deve seguir o padrão de mês (1, 2, 3, 4...) sem a necessidade do "0"
 ```
 {
-    "cpf": "00000000000",
-    "total": 20.0,
+    "cpf": "12345678900",
+    "total": 250.0,
+    "status": "EM_ANDAMENTO",
+    "status_pagamento": "PROCESSING",
+    "tipo_pagamento": "CREDIT_CARD",
     "itens": [
         {
-            "nome": "Pilha",
-            "data_criacao": "21/06/2022 03:25:03",
-            "data_validade": "23/06/2023 03:25:03",
-            "valor": 30.0,
-            "descricao": "Pilha para uso doméstico",
+            "nome": "Headset",
+            "data_criacao": "21/06/1997 03:25:03",
+            "data_validade": "23/06/1998 03:25:03",
+            "valor": 260.0,
+            "descricao": "Headset gamer",
             "ofertas": [
                 {
-                    "nome": "Saldão",
-                    "data_criacao": "20/05/2022 02:20:02",
+                    "nome": "wes",
+                    "data_criacao": "20/06/2023 02:20:02",
                     "data_validade": "20/06/2024 02:20:02",
                     "desconto": 10.0,
                     "descricao": "Teste"
                 }
             ]
         }
-    ]
+    ],
+    "pedidoPagamento": 
+        {
+            "numero_cartao": "123456789",
+            "nome_cartao": "Joao Silva",
+            "codigo_seguranca": "123",
+            "marca": "MASTERCARD",
+            "mes_expiracao": "3",
+            "ano_expiracao": "25",
+            "moeda": "BRL",
+            "valor": 250.0
+        }  
 }
 ```
 
