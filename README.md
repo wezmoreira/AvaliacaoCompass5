@@ -1,33 +1,48 @@
-#Avaliação Sprint 5
+# Avaliação Sprint 5 e Sprint 6
 
-##Endpoints
+## Endpoints
 
 ### Post
 - http://localhost:8080/api/pedido
 
-#### Body do Post (deve ser um Cpf válido!)
+#### Body do Post (deve ser um Cpf válido!) 
+#### E "mes_expiracao" no campo  "pedidoPagamento" deve seguir o padrão de mês (1, 2, 3, 4...) sem a necessidade do "0"
 ```
 {
-    "cpf": "00000000000",
-    "total": 20.0,
+    "cpf": "12345678900",
+    "total": 250.0,
+    "status": "EM_ANDAMENTO",
+    "status_pagamento": "PROCESSING",
+    "tipo_pagamento": "CREDIT_CARD",
     "itens": [
         {
-            "nome": "Pilha",
-            "data_criacao": "21/06/2022 03:25:03",
-            "data_validade": "23/06/2023 03:25:03",
-            "valor": 30.0,
-            "descricao": "Pilha para uso doméstico",
+            "nome": "Headset",
+            "data_criacao": "21/06/1997 03:25:03",
+            "data_validade": "23/06/1998 03:25:03",
+            "valor": 260.0,
+            "descricao": "Headset gamer",
             "ofertas": [
                 {
-                    "nome": "Saldão",
-                    "data_criacao": "20/05/2022 02:20:02",
+                    "nome": "wes",
+                    "data_criacao": "20/06/2023 02:20:02",
                     "data_validade": "20/06/2024 02:20:02",
                     "desconto": 10.0,
                     "descricao": "Teste"
                 }
             ]
         }
-    ]
+    ],
+    "pedidoPagamento": 
+        {
+            "numero_cartao": "123456789",
+            "nome_cartao": "Joao Silva",
+            "codigo_seguranca": "123",
+            "marca": "MASTERCARD",
+            "mes_expiracao": "3",
+            "ano_expiracao": "25",
+            "moeda": "BRL",
+            "valor": 250.0
+        }  
 }
 ```
 
@@ -72,3 +87,22 @@ https://www.baeldung.com/jpa-size-length-column-differences
 https://fabiano-goes.medium.com/api-rest-com-paginação-usando-spring-data-e-query-9eddb29c9223
 
 https://www.youtube.com/watch?v=SzcvuHjRJKE
+
+
+### Referências que utilizei para executar essa prova Sprint 6:
+
+https://www.baeldung.com/spring-5-webclient
+
+https://docs.spring.io/spring-boot/docs/2.0.x/reference/html/boot-features-webclient.html
+
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/function/client/WebClient.Builder.html
+
+https://reflectoring.io/spring-webclient/
+
+https://docs.spring.io/spring-security/site/docs/5.0.x/reference/html/crypto.html
+
+https://docs.spring.io/spring-security/reference/features/integrations/cryptography.html#:~:text=The%20Spring%20Security%20Crypto%20module,Security%20(or%20Spring)%20code.
+
+https://www.tabnine.com/code/java/methods/io.jsonwebtoken.JwtBuilder/signWith
+
+https://stackoverflow.com/questions/40252903/static-secret-as-byte-key-or-string
